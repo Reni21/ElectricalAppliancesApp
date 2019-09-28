@@ -17,7 +17,6 @@ public class MainMenuState implements MenuState {
     private FlatService flatService;
     @NonNull
     private Flat flat;
-    private static final String MENU_CMD = AppCommand.MAIN_MENU_CMD;
 
     @Override
     public void handleUserInput(String input, MenuContext context) {
@@ -104,6 +103,6 @@ public class MainMenuState implements MenuState {
 
     @Override
     public void printHelp() {
-        System.out.println(MENU_CMD);
+        System.out.println(AppCommand.MAIN_MENU_CMD);
     }
 }

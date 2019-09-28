@@ -19,7 +19,6 @@ public class ApplianceMenuState implements MenuState {
     private Flat flat;
 
     private ElectricalAppliance appliance;
-    private static final String MENU_CMD = AppCommand.APPLIANCE_MENU_CMD;
 
     public void setAppliance(ElectricalAppliance appliance) {
         this.appliance = appliance;
@@ -27,7 +26,7 @@ public class ApplianceMenuState implements MenuState {
 
     @Override
     public void handleUserInput(String input, MenuContext context) {
-        if(input.isEmpty()){
+        if (input.isEmpty()) {
             return;
         }
         switch (input) {
@@ -56,7 +55,7 @@ public class ApplianceMenuState implements MenuState {
     }
 
     private void connectApplianceToSocket() {
-        if(appliance.isConnectToSocket()){
+        if (appliance.isConnectToSocket()) {
             System.out.format("%s is already connect to socket%n", appliance.getName());
             return;
         }
@@ -64,12 +63,12 @@ public class ApplianceMenuState implements MenuState {
         System.out.format("%s successfully connect to socket%n", appliance.getName());
     }
 
-    private void turnOnAppliance(){
-        if(!appliance.isConnectToSocket()){
+    private void turnOnAppliance() {
+        if (!appliance.isConnectToSocket()) {
             System.out.format("REJECT! %s is not connect to socket%n", appliance.getName());
             return;
         }
-        if(appliance.isTurnOn()){
+        if (appliance.isTurnOn()) {
             System.out.format("%s is already turned on%n", appliance.getName());
             return;
         }
@@ -77,16 +76,16 @@ public class ApplianceMenuState implements MenuState {
         int totalElectricityLoad = flatService.countCurrentElectricityLoad(flat);
         if (totalElectricityLoad > flat.getMaxConductivity()) {
             System.out.format("%s turned on faild%n", appliance.getName());
-            System.out.println((char)27 + "[31m" +
+            System.out.println((char) 27 + "[31m" +
                     "Opps, the electricity went out... Electricity load is too height. Please, turn off something!" +
-                    (char)27 + "[0m");
+                    (char) 27 + "[0m");
         } else {
             System.out.format("%s successfully turned on%n", appliance.getName());
         }
     }
 
-    private void turnOffAppliance(){
-        if(!appliance.isTurnOn()){
+    private void turnOffAppliance() {
+        if (!appliance.isTurnOn()) {
             System.out.format("%s is already turned off%n", appliance.getName());
             return;
         }
@@ -94,16 +93,16 @@ public class ApplianceMenuState implements MenuState {
         int totalElectricityLoad = flatService.countCurrentElectricityLoad(flat);
         if (totalElectricityLoad > flat.getMaxConductivity()) {
             System.out.format("%s successfully turned off%n", appliance.getName());
-            System.out.println((char)27 + "[31m" +
+            System.out.println((char) 27 + "[31m" +
                     "Sorry, the electricity still went out... Please, turn off something one more!" +
-                    (char)27 + "[0m");
+                    (char) 27 + "[0m");
         } else {
             System.out.format("%s successfully turned off%n", appliance.getName());
         }
     }
 
     private void disconnectApplianceFromSocket() {
-        if(!appliance.isConnectToSocket()){
+        if (!appliance.isConnectToSocket()) {
             System.out.format("%s is already disconnect from socket%n", appliance.getName());
         }
         applianceService.disconnectFromSocket(appliance);
@@ -114,6 +113,6 @@ public class ApplianceMenuState implements MenuState {
     public void printHelp() {
         System.out.format("<--------------------------- %s MENU ---------------------------->%n",
                 appliance.getName().toString().toUpperCase());
-        System.out.println(MENU_CMD);
+        System.out.println(AppCommand.APPLIANCE_MENU_CMD);
     }
 }

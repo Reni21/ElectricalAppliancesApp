@@ -14,7 +14,7 @@ public class FlatService {
                 .findFirst().orElse(null);
     }
 
-    public List<String> getAllAppliancesNames(Flat flat){
+    public List<String> getAllAppliancesNames(Flat flat) {
         return flat.getAppliances().stream()
                 .map(appliance -> appliance.getName().toString())
                 .collect(Collectors.toList());
@@ -48,18 +48,18 @@ public class FlatService {
                 .collect(Collectors.toList());
     }
 
-    public List<ElectricalAppliance> findAppliancesByParams(Flat flat, double weight, ApplianceColor color, ApplianceBrand brand, int power){
+    public List<ElectricalAppliance> findAppliancesByParams(Flat flat, double weight, ApplianceColor color, ApplianceBrand brand, int power) {
         Stream<ElectricalAppliance> result = flat.getAppliances().stream();
-        if (weight > 0){
+        if (weight > 0) {
             result = result.filter(appliance -> appliance.getWeight() == weight);
         }
-        if(color != null){
+        if (color != null) {
             result = result.filter(appliance -> appliance.getColor().equals(color));
         }
-        if(brand != null){
+        if (brand != null) {
             result = result.filter(appliance -> appliance.getBrand().equals(brand));
         }
-        if(power > 0){
+        if (power > 0) {
             result = result.filter(appliance -> appliance.getPowerConsumption() == power);
         }
         return result.collect(Collectors.toList());

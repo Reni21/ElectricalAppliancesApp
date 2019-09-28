@@ -12,7 +12,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class SearchMenuState implements MenuState {
-    private static final String MENU_CMD = AppCommand.SEARCH_MENU;
     @NonNull
     private MenuStateProvider menuStateProvider;
     @NonNull
@@ -112,6 +111,6 @@ public class SearchMenuState implements MenuState {
 
     @Override
     public void printHelp() {
-        System.out.println(MENU_CMD);
+        System.out.println(AppCommand.SEARCH_MENU);
     }
 }

@@ -17,7 +17,7 @@ public class ElectricalAppliance extends Appliance implements Comparable<Electri
 
     public ElectricalAppliance(int powerConsumption, boolean isForContinuousWork, int weight,
                                ApplianceColor color, ApplianceName type, ApplianceBrand brand) {
-        super(weight,color,type);
+        super(weight, color, type);
         this.powerConsumption = powerConsumption;
         this.isForContinuousWork = isForContinuousWork;
         this.brand = brand;

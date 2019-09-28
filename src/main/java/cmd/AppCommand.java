@@ -19,7 +19,7 @@ public class AppCommand {
 
     public static final String APPLIANCE_MENU_CMD =
             String.format(
-                            "  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n",
+                    "  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n",
                     "--connect", "\"connect to socket\"",
                     "--d-connect", "\"disconnect from socket\"",
                     "--on", "\"turn on\"",

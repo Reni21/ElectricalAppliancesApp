@@ -29,7 +29,7 @@ public class MenuStateProvider {
 
     public ApplianceMenuState getApplianceMenuState(ElectricalAppliance appliance) {
         if (applianceMenu == null) {
-            applianceMenu = new ApplianceMenuState(this, applianceService,flatService, flat);
+            applianceMenu = new ApplianceMenuState(this, applianceService, flatService, flat);
         }
         applianceMenu.setAppliance(appliance);
         return applianceMenu;

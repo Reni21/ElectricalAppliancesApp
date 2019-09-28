@@ -14,7 +14,7 @@ public enum ApplianceName {
 
     @Override
     public String toString() {
-        if(super.equals(TV)){
+        if (super.equals(TV)) {
             return "TV";
         }
         String name = super.toString().toLowerCase();
