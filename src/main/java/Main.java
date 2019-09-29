@@ -5,8 +5,8 @@ import entity.Flat;
 import service.ElectricalApplianceService;
 import service.FlatService;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +14,9 @@ public class Main {
     public static void main(String[] args) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            Flat flat = objectMapper.readValue(new File("src/main/resources/flat.json"), Flat.class);
+
+            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("flat.json");
+            Flat flat = objectMapper.readValue(is, Flat.class);
             FlatService flatService = new FlatService();
             ElectricalApplianceService applianceService = new ElectricalApplianceService();
             MenuStateProvider menuProvider = new MenuStateProvider(applianceService, flatService, flat);
