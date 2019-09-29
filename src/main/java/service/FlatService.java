@@ -8,10 +8,12 @@ import java.util.stream.Stream;
 
 public class FlatService {
 
-    public ElectricalAppliance findApplianceByName(Flat flat, ApplianceName name) {
-        return flat.getAppliances().stream()
-                .filter(appliance -> appliance.getName() == name)
-                .findFirst().orElse(null);
+    public ElectricalAppliance findApplianceByName(Flat flat, String applianceName) {
+                return flat.getAppliances().stream()
+                .filter(appliance -> appliance.getName().toString().toLowerCase()
+                        .equals(applianceName.toLowerCase()))
+                .findFirst().orElseThrow(() -> new IllegalArgumentException(
+                String.format("Flat does not contain such appliance \"%s\". Try to choose another one%n", applianceName)));
     }
 
     public List<String> getAllAppliancesNames(Flat flat) {
@@ -20,7 +22,7 @@ public class FlatService {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getNamesOfNotForContinuesWorkAppliances(Flat flat) {
+    public List<String> getDangerousTurnedOnAppliancesNames(Flat flat) {
         return flat.getAppliances().stream()
                 .filter(ElectricalAppliance::isTurnOn)
                 .filter(appliance -> !appliance.isForContinuousWork())
@@ -48,6 +50,10 @@ public class FlatService {
                 .collect(Collectors.toList());
     }
 
+    public List<ElectricalAppliance> getAllAppliances(Flat flat) {
+        return flat.getAppliances();
+    }
+
     public List<ElectricalAppliance> findAppliancesByParams(Flat flat, double weight, ApplianceColor color, ApplianceBrand brand, int power) {
         Stream<ElectricalAppliance> result = flat.getAppliances().stream();
         if (weight > 0) {
@@ -63,9 +69,5 @@ public class FlatService {
             result = result.filter(appliance -> appliance.getPowerConsumption() == power);
         }
         return result.collect(Collectors.toList());
-    }
-
-    public List<ElectricalAppliance> getAllAppliances(Flat flat) {
-        return flat.getAppliances();
     }
 }

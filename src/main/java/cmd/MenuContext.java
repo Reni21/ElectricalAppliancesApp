@@ -1,6 +1,8 @@
 package cmd;
 
+import exception.BusinessException;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
 public class MenuContext {
@@ -8,10 +10,10 @@ public class MenuContext {
 
     public void changeState(MenuState newState) {
         menuState = newState;
-        newState.printHelp();
+        menuState.printHelp();
     }
 
-    public void handleUserInput(String input) {
+    public void handleUserInput(String input) throws BusinessException {
         menuState.handleUserInput(input, this);
     }
 

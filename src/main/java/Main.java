@@ -2,11 +2,15 @@ import cmd.MenuContext;
 import cmd.MenuStateProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Flat;
+import exception.ApplianceNotConnectToSocketException;
+import exception.BusinessException;
+import exception.FireSafetyException;
+import exception.OverLoadElectricityException;
 import service.ElectricalApplianceService;
 import service.FlatService;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +18,9 @@ public class Main {
     public static void main(String[] args) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            Flat flat = objectMapper.readValue(new File("src/main/resources/flat.json"), Flat.class);
+
+            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("flat.json");
+            Flat flat = objectMapper.readValue(is, Flat.class);
             FlatService flatService = new FlatService();
             ElectricalApplianceService applianceService = new ElectricalApplianceService();
             MenuStateProvider menuProvider = new MenuStateProvider(applianceService, flatService, flat);
@@ -35,7 +41,11 @@ public class Main {
                 try {
                     String input = scanner.nextLine();
                     menuContext.handleUserInput(input);
-                } catch (IllegalArgumentException ex) {
+                } catch (ApplianceNotConnectToSocketException ex) {
+                    System.out.format("REJECT! %s%n", ex.getMessage());
+                } catch (OverLoadElectricityException | FireSafetyException ex) {
+                    System.out.println((char) 27 + "[31m" + ex.getMessage() + (char) 27 + "[0m");
+                } catch (BusinessException | IllegalArgumentException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
