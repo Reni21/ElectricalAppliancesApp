@@ -20,7 +20,7 @@ public class MainMenuState implements MenuState {
 
     @Override
     public void handleUserInput(String input, MenuContext context) {
-        if (input.isEmpty()){
+        if (input.isEmpty()) {
             return;
         }
         if (input.startsWith("--s-")) {
@@ -52,8 +52,7 @@ public class MainMenuState implements MenuState {
                 printHelp();
                 break;
             default:
-                System.out.format("Unknown command \"%s\"", input);
-                printHelp();
+                System.out.format("Unknown command \"%s\"%n", input);
         }
     }
 
@@ -67,7 +66,7 @@ public class MainMenuState implements MenuState {
         ApplianceName applianceSimpleName = ApplianceName.getValueByName(extractedName);
         if (applianceSimpleName == null) {
             throw new IllegalArgumentException(
-                    String.format("Appliance \"%s\" doesn't exist. Try one more%n", extractedName));
+                    String.format("Appliance \"%s\" doesn't exist. Try to choose another one%n", extractedName));
         }
         ElectricalAppliance appliance = flatService.findApplianceByName(flat, applianceSimpleName);
         ApplianceMenuState applianceMenu = menuStateProvider.getApplianceMenuState(appliance);
@@ -77,7 +76,7 @@ public class MainMenuState implements MenuState {
     private void showWorkingAppliances() {
         List<String> turnedOnAppliances = flatService.getNamesOfAllTurnedOnAppliances(flat);
         if (turnedOnAppliances.isEmpty()) {
-            System.out.println("All electrical appliance are turn of");
+            System.out.println("All electrical appliance are turned of");
         } else {
             System.out.format("Turned on appliances: %s%n",
                     String.join(", ", turnedOnAppliances));

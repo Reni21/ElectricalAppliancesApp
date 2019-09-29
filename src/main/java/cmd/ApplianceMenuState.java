@@ -49,8 +49,7 @@ public class ApplianceMenuState implements MenuState {
                 printHelp();
                 break;
             default:
-                System.out.format("Unknown command \"%s\"", input);
-                printHelp();
+                System.out.format("Unknown command \"%s\"%n", input);
         }
     }
 
@@ -89,21 +88,27 @@ public class ApplianceMenuState implements MenuState {
             System.out.format("%s is already turned off%n", appliance.getName());
             return;
         }
-        applianceService.turnOff(appliance);
+        String msg = "";
         int totalElectricityLoad = flatService.countCurrentElectricityLoad(flat);
+        if (totalElectricityLoad > flat.getMaxConductivity()) {
+            msg = "The electricity turned on again! ";
+        }
+        applianceService.turnOff(appliance);
+        totalElectricityLoad = flatService.countCurrentElectricityLoad(flat);
         if (totalElectricityLoad > flat.getMaxConductivity()) {
             System.out.format("%s successfully turned off%n", appliance.getName());
             System.out.println((char) 27 + "[31m" +
                     "Sorry, the electricity still went out... Please, turn off something one more!" +
                     (char) 27 + "[0m");
         } else {
-            System.out.format("%s successfully turned off%n", appliance.getName());
+            System.out.format("%s%s successfully turned off%n", msg, appliance.getName());
         }
     }
 
     private void disconnectApplianceFromSocket() {
         if (!appliance.isConnectToSocket()) {
             System.out.format("%s is already disconnect from socket%n", appliance.getName());
+            return;
         }
         applianceService.disconnectFromSocket(appliance);
         System.out.format("%s successfully disconnect from socket%n", appliance.getName());

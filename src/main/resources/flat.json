@@ -7,7 +7,7 @@
       "name": "HAIRDRYER",
       "brand": "ROWENTA",
       "powerConsumption": 220,
-      "forContinuousWork": true,
+      "forContinuousWork": false,
       "connectToSocket": false,
       "turnOn": false
     },
@@ -27,7 +27,7 @@
       "name": "WASHING_MACHINE",
       "brand": "SAMSUNG",
       "powerConsumption": 1700,
-      "forContinuousWork": false,
+      "forContinuousWork": true,
       "connectToSocket": false,
       "turnOn": false
     },
