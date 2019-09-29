@@ -100,6 +100,7 @@ public class SearchMenuState implements MenuState {
     }
 
     private double parsFractionalNumber(String s) {
+        s = s.replace(",", ".");
         try {
             return Double.parseDouble(s.substring(4));
         } catch (NumberFormatException ex) {
