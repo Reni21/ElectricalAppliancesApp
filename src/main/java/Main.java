@@ -2,6 +2,10 @@ import cmd.MenuContext;
 import cmd.MenuStateProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Flat;
+import exception.ApplianceNotConnectToSocketException;
+import exception.BusinessException;
+import exception.FireSafetyException;
+import exception.OverLoadElectricityException;
 import service.ElectricalApplianceService;
 import service.FlatService;
 
@@ -37,7 +41,11 @@ public class Main {
                 try {
                     String input = scanner.nextLine();
                     menuContext.handleUserInput(input);
-                } catch (IllegalArgumentException ex) {
+                } catch (ApplianceNotConnectToSocketException ex) {
+                    System.out.format("REJECT! %s%n", ex.getMessage());
+                } catch (OverLoadElectricityException | FireSafetyException ex) {
+                    System.out.println((char) 27 + "[31m" + ex.getMessage() + (char) 27 + "[0m");
+                } catch (BusinessException | IllegalArgumentException ex) {
                     System.out.println(ex.getMessage());
                 }
             }

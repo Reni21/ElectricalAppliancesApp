@@ -19,11 +19,14 @@ public class AppCommand {
 
     public static final String APPLIANCE_MENU_CMD =
             String.format(
-                    "  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n",
+                    "  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n" +
+                            "  %-20s%s%n  %-20s%s%n  %-20s%s%n  %-20s%s%n",
                     "--connect", "\"connect to socket\"",
                     "--d-connect", "\"disconnect from socket\"",
                     "--on", "\"turn on\"",
-                    "--off", "\"turn off\"",
+                    "--off", "\"turn off\"\n",
+                    "--s-appliance_name", "\"select another appliance\"",
+                    "--all", "\"show all appliances in the flat\"",
                     "--return", "\"return to main menu\"",
                     "--help", "\"show menu command\""
             );

@@ -1,8 +1,8 @@
 package cmd;
 
-import entity.ApplianceName;
 import entity.ElectricalAppliance;
 import entity.Flat;
+import exception.FireSafetyException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import service.FlatService;
@@ -19,12 +19,12 @@ public class MainMenuState implements MenuState {
     private Flat flat;
 
     @Override
-    public void handleUserInput(String input, MenuContext context) {
+    public void handleUserInput(String input, MenuContext context) throws FireSafetyException {
         if (input.isEmpty()) {
             return;
         }
         if (input.startsWith("--s-")) {
-            switchToApplianceMenu(context, input);
+            switchToApplianceMenu(context, input.substring(4));
             return;
         }
 
@@ -61,14 +61,8 @@ public class MainMenuState implements MenuState {
                 .forEach(appliance -> System.out.println(appliance.toString()));
     }
 
-    private void switchToApplianceMenu(MenuContext context, String input) {
-        String extractedName = input.substring(4);
-        ApplianceName applianceSimpleName = ApplianceName.getValueByName(extractedName);
-        if (applianceSimpleName == null) {
-            throw new IllegalArgumentException(
-                    String.format("Appliance \"%s\" doesn't exist. Try to choose another one%n", extractedName));
-        }
-        ElectricalAppliance appliance = flatService.findApplianceByName(flat, applianceSimpleName);
+    private void switchToApplianceMenu(MenuContext context, String applianceName) {
+        ElectricalAppliance appliance = flatService.findApplianceByName(flat, applianceName);
         ApplianceMenuState applianceMenu = menuStateProvider.getApplianceMenuState(appliance);
         context.changeState(applianceMenu);
     }
@@ -84,19 +78,17 @@ public class MainMenuState implements MenuState {
     }
 
     private boolean isAllDangerApplianceTurnedOff() {
-        return flatService.getNamesOfNotForContinuesWorkAppliances(flat).isEmpty();
+        return flatService.getDangerousTurnedOnAppliancesNames(flat).isEmpty();
     }
 
-    private void quiteApp() {
+    private void quiteApp() throws FireSafetyException {
         if (isAllDangerApplianceTurnedOff()) {
             System.out.println("Quit the app"); // add check on turn on appliances
             System.exit(0);
         } else {
-            System.out.println((char) 27 + "[31m" +
-                    "ATTENTION! You leave some appliances TURN ON, it can be dangerous!" +
-                    (char) 27 + "[0m");
-            System.out.print("Must be turned off: ");
-            System.out.println(String.join(", ", flatService.getNamesOfNotForContinuesWorkAppliances(flat)));
+            System.out.print("Danger appliances which not turned off: ");
+            System.out.println(String.join(", ", flatService.getDangerousTurnedOnAppliancesNames(flat)));
+            throw new FireSafetyException("ATTENTION! You leave some appliances TURN ON, it can be dangerous!");
         }
     }
 

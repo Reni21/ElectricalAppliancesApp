@@ -2,10 +2,14 @@ package cmd;
 
 import entity.ElectricalAppliance;
 import entity.Flat;
+import exception.BusinessException;
+import exception.OverLoadElectricityException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import service.ElectricalApplianceService;
 import service.FlatService;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class ApplianceMenuState implements MenuState {
@@ -25,8 +29,12 @@ public class ApplianceMenuState implements MenuState {
     }
 
     @Override
-    public void handleUserInput(String input, MenuContext context) {
+    public void handleUserInput(String input, MenuContext context) throws BusinessException {
         if (input.isEmpty()) {
+            return;
+        }
+        if (input.startsWith("--s-")) {
+            switchToApplianceMenu(context, input.substring(4));
             return;
         }
         switch (input) {
@@ -42,8 +50,13 @@ public class ApplianceMenuState implements MenuState {
             case "--off":
                 turnOffAppliance();
                 break;
+            case "--all":
+                List<String> names = flatService.getAllAppliancesNames(flat);
+                System.out.println(String.join(", ", names));
+                break;
             case "--return":
-                context.changeState(menuStateProvider.getMainMenuState());
+                MainMenuState mainMenuState = menuStateProvider.getMainMenuState();
+                context.changeState(mainMenuState);
                 break;
             case "--help":
                 printHelp();
@@ -53,41 +66,23 @@ public class ApplianceMenuState implements MenuState {
         }
     }
 
-    private void connectApplianceToSocket() {
-        if (appliance.isConnectToSocket()) {
-            System.out.format("%s is already connect to socket%n", appliance.getName());
-            return;
-        }
+    private void connectApplianceToSocket() throws BusinessException {
         applianceService.connectToSocket(appliance);
         System.out.format("%s successfully connect to socket%n", appliance.getName());
     }
 
-    private void turnOnAppliance() {
-        if (!appliance.isConnectToSocket()) {
-            System.out.format("REJECT! %s is not connect to socket%n", appliance.getName());
-            return;
-        }
-        if (appliance.isTurnOn()) {
-            System.out.format("%s is already turned on%n", appliance.getName());
-            return;
-        }
+    private void turnOnAppliance() throws BusinessException {
         applianceService.turnOn(appliance);
         int totalElectricityLoad = flatService.countCurrentElectricityLoad(flat);
         if (totalElectricityLoad > flat.getMaxConductivity()) {
-            System.out.format("%s turned on faild%n", appliance.getName());
-            System.out.println((char) 27 + "[31m" +
-                    "Opps, the electricity went out... Electricity load is too height. Please, turn off something!" +
-                    (char) 27 + "[0m");
+            throw new OverLoadElectricityException(
+                    "Opps, the electricity went out... Electricity load is too height. Please, turn off something!");
         } else {
             System.out.format("%s successfully turned on%n", appliance.getName());
         }
     }
 
-    private void turnOffAppliance() {
-        if (!appliance.isTurnOn()) {
-            System.out.format("%s is already turned off%n", appliance.getName());
-            return;
-        }
+    private void turnOffAppliance() throws BusinessException {
         String msg = "";
         int totalElectricityLoad = flatService.countCurrentElectricityLoad(flat);
         if (totalElectricityLoad > flat.getMaxConductivity()) {
@@ -96,22 +91,23 @@ public class ApplianceMenuState implements MenuState {
         applianceService.turnOff(appliance);
         totalElectricityLoad = flatService.countCurrentElectricityLoad(flat);
         if (totalElectricityLoad > flat.getMaxConductivity()) {
-            System.out.format("%s successfully turned off%n", appliance.getName());
-            System.out.println((char) 27 + "[31m" +
-                    "Sorry, the electricity still went out... Please, turn off something one more!" +
-                    (char) 27 + "[0m");
+            System.out.format("%s is turned off%n", appliance.getName());
+            throw new OverLoadElectricityException(
+                    "Sorry, the electricity still went out... Please, turn off something else!");
         } else {
             System.out.format("%s%s successfully turned off%n", msg, appliance.getName());
         }
     }
 
-    private void disconnectApplianceFromSocket() {
-        if (!appliance.isConnectToSocket()) {
-            System.out.format("%s is already disconnect from socket%n", appliance.getName());
-            return;
-        }
+    private void disconnectApplianceFromSocket() throws BusinessException {
         applianceService.disconnectFromSocket(appliance);
         System.out.format("%s successfully disconnect from socket%n", appliance.getName());
+    }
+
+    private void switchToApplianceMenu(MenuContext context, String applianceName) {
+        ElectricalAppliance appliance = flatService.findApplianceByName(flat, applianceName);
+        ApplianceMenuState applianceMenu = menuStateProvider.getApplianceMenuState(appliance);
+        context.changeState(applianceMenu);
     }
 
     @Override
