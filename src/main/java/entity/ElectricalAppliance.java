@@ -6,7 +6,6 @@ import lombok.*;
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = true, exclude = {"isConnectToSocket", "isTurnOn"})
-//@ToString(callSuper = true, exclude = {"isConnectToSocket", "isTurnOn"})
 public class ElectricalAppliance extends Appliance implements Comparable<ElectricalAppliance> {
     private ApplianceBrand brand;
     private int powerConsumption;

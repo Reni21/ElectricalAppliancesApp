@@ -6,7 +6,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode
-@ToString
 public abstract class Appliance {
     private double weight;
     private ApplianceColor color;
