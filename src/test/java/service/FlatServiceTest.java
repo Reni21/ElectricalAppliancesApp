@@ -14,7 +14,7 @@ public class FlatServiceTest {
     private Flat flat;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         this.instance = new FlatService();
         this.flat = new Flat(1000);
     }
@@ -149,12 +149,6 @@ public class FlatServiceTest {
 
         List<ElectricalAppliance> res = instance.getAllAppliances(flat);
         assertEquals(expected,res);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIfFlatIsNull(){
-        flat.setAppliances(generateListOfElectricalAppliances());
-        instance.findAppliancesByParams(null, 0, null, null, 0);
     }
 
     @Test

@@ -13,7 +13,7 @@ public class ElectricalApplianceServiceTest {
     private ElectricalAppliance appliance;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         this.instance = new ElectricalApplianceService();
         this.appliance = DataProvider.createLamp();
     }

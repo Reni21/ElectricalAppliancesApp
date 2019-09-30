@@ -30,6 +30,7 @@ public class ApplianceMenuState implements MenuState {
 
     @Override
     public void handleUserInput(String input, MenuContext context) throws BusinessException {
+        input = input.trim();
         if (input.isEmpty()) {
             return;
         }

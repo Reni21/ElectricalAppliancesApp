@@ -22,6 +22,8 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ApplianceMenuStateTest {
     @Mock
+    MenuContext menuContext;
+    @Mock
     private MenuStateProvider menuStateProvider;
     @Mock
     private ElectricalApplianceService applianceService;
@@ -52,21 +54,21 @@ public class ApplianceMenuStateTest {
         when(flatService.findApplianceByName(flat, "tv")).thenReturn(tv);
         ApplianceMenuState applianceMenuState = mock(ApplianceMenuState.class);
         when(menuStateProvider.getApplianceMenuState(tv)).thenReturn(applianceMenuState);
-        MenuContext menuContext = mock(MenuContext.class);
+        MenuContext context = mock(MenuContext.class);
 
-        instance.handleUserInput("--s-tv", menuContext);
-        verify(menuContext).changeState(applianceMenuState);
+        instance.handleUserInput("--s-tv", context);
+        verify(context).changeState(applianceMenuState);
     }
 
     @Test
     public void shouldCallConnectApplianceToSocket() throws BusinessException {
-        instance.handleUserInput("--connect", mock(MenuContext.class));
+        instance.handleUserInput("--connect", menuContext);
         verify(applianceService).connectToSocket(appliance);
     }
 
     @Test
     public void shouldCallDisconnectApplianceFromSocket() throws BusinessException {
-        instance.handleUserInput("--d-connect", mock(MenuContext.class));
+        instance.handleUserInput("--d-connect", menuContext);
         verify(applianceService).disconnectFromSocket(appliance);
     }
 
@@ -74,7 +76,7 @@ public class ApplianceMenuStateTest {
     public void shouldTurnOnAppliance() throws BusinessException {
         when(flatService.countCurrentElectricityLoad(flat)).thenReturn(200);
 
-        instance.handleUserInput("--on", mock(MenuContext.class));
+        instance.handleUserInput("--on", menuContext);
         verify(applianceService).turnOn(appliance);
         verify(flatService).countCurrentElectricityLoad(flat);
     }
@@ -83,7 +85,7 @@ public class ApplianceMenuStateTest {
     public void shouldThrowOverLoadElectricityExceptionWhenTurnOnAppliance() throws BusinessException {
         when(flatService.countCurrentElectricityLoad(flat)).thenReturn(3500);
 
-        instance.handleUserInput("--on", mock(MenuContext.class));
+        instance.handleUserInput("--on", menuContext);
         verify(applianceService).turnOn(appliance);
         verify(flatService).countCurrentElectricityLoad(flat);
     }
@@ -92,7 +94,7 @@ public class ApplianceMenuStateTest {
     public void shouldTurnOffAppliance() throws BusinessException {
         when(flatService.countCurrentElectricityLoad(flat)).thenReturn(200).thenReturn(250);
 
-        instance.handleUserInput("--off", mock(MenuContext.class));
+        instance.handleUserInput("--off", menuContext);
         verify(applianceService).turnOff(appliance);
     }
 
@@ -100,13 +102,13 @@ public class ApplianceMenuStateTest {
     public void shouldThrowOverLoadElectricityExceptionOffAppliance() throws BusinessException {
         when(flatService.countCurrentElectricityLoad(flat)).thenReturn(3500).thenReturn(3200);
 
-        instance.handleUserInput("--off", mock(MenuContext.class));
+        instance.handleUserInput("--off", menuContext);
         verify(applianceService).turnOff(appliance);
     }
 
     @Test
     public void shouldCallGetAllAppliancesNamesOnFlatService() throws BusinessException {
-        instance.handleUserInput("--all", mock(MenuContext.class));
+        instance.handleUserInput("--all", menuContext);
         verify(flatService).getAllAppliancesNames(flat);
     }
 
@@ -119,7 +121,4 @@ public class ApplianceMenuStateTest {
 
         verify(context).changeState(newMock);
     }
-
-
-
 }

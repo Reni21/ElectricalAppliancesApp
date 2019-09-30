@@ -28,21 +28,6 @@ public class DataProvider {
         return appliances;
     }
 
-    public static MenuState createMainMenuState(){
-        MenuStateProvider menuProvider = createMenuStateProvider();
-        return new MainMenuState(menuProvider, new FlatService(), createFlat());
-    }
-
-    public static MenuState createApplianceMenuState(){
-        MenuStateProvider menuProvider = createMenuStateProvider();
-        return new ApplianceMenuState(menuProvider, new ElectricalApplianceService(), new FlatService(), createFlat());
-    }
-
-    public static MenuStateProvider createMenuStateProvider(){
-        ElectricalApplianceService applianceService = new ElectricalApplianceService();
-        return new MenuStateProvider(applianceService, new FlatService(), createFlat());
-    }
-
     public static ElectricalAppliance createLamp(){
         return new ElectricalAppliance(240, true, 7,
                 ApplianceColor.BLACK, ApplianceName.LAMP, ApplianceBrand.MAXUS);

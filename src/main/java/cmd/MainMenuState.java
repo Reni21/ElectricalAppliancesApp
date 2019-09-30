@@ -20,6 +20,7 @@ public class MainMenuState implements MenuState {
 
     @Override
     public void handleUserInput(String input, MenuContext context) throws FireSafetyException {
+        input = input.trim();
         if (input.isEmpty()) {
             return;
         }

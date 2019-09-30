@@ -21,6 +21,7 @@ public class SearchMenuState implements MenuState {
 
     @Override
     public void handleUserInput(String input, MenuContext context) {
+        input = input.trim();
         if (input.isEmpty()){
             return;
         }
