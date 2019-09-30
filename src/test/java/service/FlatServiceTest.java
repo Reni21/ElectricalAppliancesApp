@@ -118,7 +118,7 @@ public class FlatServiceTest {
     }
 
     @Test
-    public void shouldReturnElectricalAppliancesListSortedByPower() {
+    public void shouldReturnElectricalAppliancesListSortedByPowerAscending() {
         flat.setAppliances(generateListOfElectricalAppliances());
         ElectricalAppliance[] expected = {
                 new ElectricalAppliance(350, false, 0.45,
@@ -127,14 +127,35 @@ public class FlatServiceTest {
                         ApplianceColor.BLACK, ApplianceName.TV, ApplianceBrand.SAMSUNG)
         };
 
-        List<ElectricalAppliance> res = instance.sortAppliancesByPower(flat);
+        List<ElectricalAppliance> res = instance.sortAppliancesByPowerAscending(flat);
         assertArrayEquals(expected, res.toArray());
     }
 
     @Test
-    public void shouldReturnEmptyListIfThereAnyAppliancesInFlatToSort() {
+    public void shouldReturnElectricalAppliancesListSortedByPowerDescending() {
+        flat.setAppliances(generateListOfElectricalAppliances());
+        ElectricalAppliance[] expected = {
+                new ElectricalAppliance(700, true, 7,
+                        ApplianceColor.BLACK, ApplianceName.TV, ApplianceBrand.SAMSUNG),
+                new ElectricalAppliance(350, false, 0.45,
+                        ApplianceColor.YELLOW, ApplianceName.HAIRDRYER, ApplianceBrand.PHILIPS)
+        };
+
+        List<ElectricalAppliance> res = instance.sortAppliancesByPowerDescending(flat);
+        assertArrayEquals(expected, res.toArray());
+    }
+
+    @Test
+    public void shouldReturnEmptyListIfThereAnyAppliancesInFlatFromAscendingSortMethod() {
         flat.setAppliances(new ArrayList<>());
-        List<ElectricalAppliance> res = instance.sortAppliancesByPower(flat);
+        List<ElectricalAppliance> res = instance.sortAppliancesByPowerAscending(flat);
+        assertTrue(res.isEmpty());
+    }
+
+    @Test
+    public void shouldReturnEmptyListIfThereAnyAppliancesInFlatFromDescendingSortMethod() {
+        flat.setAppliances(new ArrayList<>());
+        List<ElectricalAppliance> res = instance.sortAppliancesByPowerDescending(flat);
         assertTrue(res.isEmpty());
     }
 

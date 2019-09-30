@@ -65,9 +65,15 @@ public class MainMenuStateTest {
     }
 
     @Test
-    public void shouldSortAppliances() throws BusinessException {
-        instance.handleUserInput("--sort", menuContext);
-        verify(flatService).sortAppliancesByPower(flat);
+    public void shouldSortAppliancesDescending() throws BusinessException {
+        instance.handleUserInput("--sort-", menuContext);
+        verify(flatService).sortAppliancesByPowerDescending(flat);
+    }
+
+    @Test
+    public void shouldSortAppliancesAscending() throws BusinessException {
+        instance.handleUserInput("--sort+", menuContext);
+        verify(flatService).sortAppliancesByPowerAscending(flat);
     }
 
     @Test
