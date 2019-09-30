@@ -32,7 +32,7 @@ public class MainMenuState implements MenuState {
         switch (input) {
             case "--all":
                 List<String> names = flatService.getAllAppliancesNames(flat);
-                System.out.println("\033[33m" + String.join(", ", names) + "\033[0m");
+                System.out.println(String.join(", ", names));
                 break;
             case "--show":
                 showWorkingAppliances();
@@ -44,7 +44,7 @@ public class MainMenuState implements MenuState {
                 context.changeState(menuStateProvider.getSearchMenuState());
                 break;
             case "--load":
-                System.out.format("\033[33mCurrent electricity load: %d watt%n\033[0m", flatService.countCurrentElectricityLoad(flat));
+                System.out.format("Current electricity load: %d watt%n", flatService.countCurrentElectricityLoad(flat));
                 break;
             case "--q":
                 quiteApp();
@@ -53,13 +53,13 @@ public class MainMenuState implements MenuState {
                 printHelp();
                 break;
             default:
-                System.out.format("\033[33mUnknown command \"%s\"%n\033[0m", input);
+                System.out.format("Unknown command \"%s\"%n", input);
         }
     }
 
     private void sortAppliancesByPower() {
         flatService.sortAppliancesByPower(flat)
-                .forEach(appliance -> System.out.println("\033[33m" + appliance.toString() + "\033[0m"));
+                .forEach(appliance -> System.out.println(appliance.toString()));
     }
 
     private void switchToApplianceMenu(MenuContext context, String applianceName) {
@@ -71,9 +71,9 @@ public class MainMenuState implements MenuState {
     private void showWorkingAppliances() {
         List<String> turnedOnAppliances = flatService.getNamesOfAllTurnedOnAppliances(flat);
         if (turnedOnAppliances.isEmpty()) {
-            System.out.println("\033[33mAll electrical appliance are turned of\033[0m");
+            System.out.println("All electrical appliance are turned of");
         } else {
-            System.out.format("\033[33mTurned on appliances: %s%n\033[0m",
+            System.out.format("Turned on appliances: %s%n",
                     String.join(", ", turnedOnAppliances));
         }
     }
@@ -84,11 +84,11 @@ public class MainMenuState implements MenuState {
 
     private void quiteApp() throws FireSafetyException {
         if (isAllDangerApplianceTurnedOff()) {
-            System.out.println("\033[33mQuit the app\033[0m");
+            System.out.println("Quit the app...");
             System.exit(0);
         } else {
             String appliances = String.join(", ", flatService.getDangerousTurnedOnAppliancesNames(flat));
-            System.out.format("\033[33mDanger appliances which not turned off: %s%n\033[0m", appliances);
+            System.out.format("\033[31mDanger appliances which not turned off: %s%n\033[0m", appliances);
 
             throw new FireSafetyException("ATTENTION! You leave some appliances TURN ON, it can be dangerous!");
         }
