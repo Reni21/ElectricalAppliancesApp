@@ -37,7 +37,7 @@ public class AppCommand {
                             "   --w-weight   &|   --c-color   &|   --b-brand   &|   --p-power \n" +
                       " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n" +
                             "    %-23s%s%n    %-23s%s%n    %-23s%s%n",
-                    "   --return", "\"return to main menu\"",
+                    "  --return", "\"return to main menu\"",
                     "  --all", "\"find all appliances in flat\"",
                     "  --help", "\"show menu command\""
             );
