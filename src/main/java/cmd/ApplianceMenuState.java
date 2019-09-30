@@ -113,7 +113,7 @@ public class ApplianceMenuState implements MenuState {
 
     @Override
     public void printHelp() {
-        System.out.format("\033[33m%n < - - - - - - - - - - - - - - %s MENU - - - - - - - - - - - - - - >%n\033[0m",
+        System.out.format("\033[93m%n < - - - - - - - - - - - - - - %s MENU - - - - - - - - - - - - - - >%n\033[0m",
                 appliance.getName().toString().toUpperCase());
         System.out.println(AppCommand.APPLIANCE_MENU_CMD);
     }
