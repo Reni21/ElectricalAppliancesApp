@@ -18,7 +18,6 @@ public class MenuContextTest {
     @InjectMocks
     private MenuContext instance;
 
-
     @Before
     public void setUp() {
         instance = new MenuContext(menuState);

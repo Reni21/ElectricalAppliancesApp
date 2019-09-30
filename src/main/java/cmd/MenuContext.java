@@ -2,7 +2,6 @@ package cmd;
 
 import exception.BusinessException;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public class MenuContext {

@@ -76,5 +76,4 @@ public class ElectricalApplianceServiceTest {
         appliance.setTurnOn(false);
         instance.turnOff(appliance);
     }
-
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DataProvider {
 
-    public static Flat createFlat(){
+    public static Flat createFlat() {
         Flat flat = new Flat(1000);
         flat.setAppliances(createElectricalAppliances());
         return flat;
@@ -28,9 +28,8 @@ public class DataProvider {
         return appliances;
     }
 
-    public static ElectricalAppliance createLamp(){
+    public static ElectricalAppliance createLamp() {
         return new ElectricalAppliance(240, true, 7,
                 ApplianceColor.BLACK, ApplianceName.LAMP, ApplianceBrand.MAXUS);
     }
-
 }

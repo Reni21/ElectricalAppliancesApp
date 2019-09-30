@@ -51,7 +51,7 @@ public class SearchMenuStateTest {
     @Test
     public void shouldSearchForGivenAppliancesInFlat() {
         instance.handleUserInput("--p-700", mock(MenuContext.class));
-        verify(flatService).findAppliancesByParams(flat,0, null, null, 700);
+        verify(flatService).findAppliancesByParams(flat, 0, null, null, 700);
     }
 
     @Test(expected = IllegalArgumentException.class)

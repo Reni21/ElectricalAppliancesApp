@@ -148,11 +148,11 @@ public class FlatServiceTest {
                 ApplianceColor.YELLOW, ApplianceName.HAIRDRYER, ApplianceBrand.PHILIPS));
 
         List<ElectricalAppliance> res = instance.getAllAppliances(flat);
-        assertEquals(expected,res);
+        assertEquals(expected, res);
     }
 
     @Test
-    public void shouldReturnListOfElectricalAppliancesIfFlatContainsItemWhichMatchWithNotNullParameters(){
+    public void shouldReturnListOfElectricalAppliancesIfFlatContainsItemWhichMatchWithNotNullParameters() {
         flat.setAppliances(generateListOfElectricalAppliances());
         List<ElectricalAppliance> expected = new ArrayList<>();
         expected.add(new ElectricalAppliance(350, false, 0.45,
@@ -160,11 +160,11 @@ public class FlatServiceTest {
 
         List<ElectricalAppliance> res = instance
                 .findAppliancesByParams(flat, 0.45, null, ApplianceBrand.PHILIPS, 0);
-        assertEquals(expected,res);
+        assertEquals(expected, res);
     }
 
     @Test
-    public void shouldReturnEmptyListOfElectricalAppliancesIfFlatDoesNotContainsItemWithGivenParameters(){
+    public void shouldReturnEmptyListOfElectricalAppliancesIfFlatDoesNotContainsItemWithGivenParameters() {
         flat.setAppliances(generateListOfElectricalAppliances());
         List<ElectricalAppliance> res = instance
                 .findAppliancesByParams(flat, 0, ApplianceColor.RED, null, 0);
