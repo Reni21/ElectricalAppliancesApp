@@ -88,7 +88,7 @@ public class MainMenuState implements MenuState {
             System.exit(0);
         } else {
             String appliances = String.join(", ", flatService.getDangerousTurnedOnAppliancesNames(flat));
-            System.out.format("\033[31mDanger appliances which not turned off: %s%n\033[0m", appliances);
+            System.out.format("\033[91mDanger appliances which not turned off: %s%n\033[0m", appliances);
 
             throw new FireSafetyException("ATTENTION! You leave some appliances TURN ON, it can be dangerous!");
         }

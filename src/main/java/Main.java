@@ -41,11 +41,11 @@ public class Main {
                     String input = scanner.nextLine();
                     menuContext.handleUserInput(input);
                 } catch (ApplianceNotConnectToSocketException ex) {
-                    System.out.format("\033[33mREJECT! %s%n\033[0m", ex.getMessage());
+                    System.out.format("\033[93mREJECT! %s%n\033[0m", ex.getMessage());
                 } catch (OverLoadElectricityException | FireSafetyException ex) {
-                    System.out.println("\033[31m" + ex.getMessage() + "\033[0m");
+                    System.out.println("\033[91m" + ex.getMessage() + "\033[0m");
                 } catch (BusinessException | IllegalArgumentException ex) {
-                    System.out.println("\033[33m" +ex.getMessage() + "\033[0m");
+                    System.out.println("\033[93m" +ex.getMessage() + "\033[0m");
                 }
             }
         }
