@@ -53,7 +53,7 @@ public class ApplianceMenuState implements MenuState {
                 break;
             case "--all":
                 List<String> names = flatService.getAllAppliancesNames(flat);
-                System.out.println("\033[33m" + String.join(", ", names) + "\033[0m");
+                System.out.println(String.join(", ", names));
                 break;
             case "--return":
                 MainMenuState mainMenuState = menuStateProvider.getMainMenuState();
@@ -63,13 +63,13 @@ public class ApplianceMenuState implements MenuState {
                 printHelp();
                 break;
             default:
-                System.out.format("\033[33mUnknown command \"%s\"%n\033[0m", input);
+                System.out.format("Unknown command \"%s\"%n", input);
         }
     }
 
     private void connectApplianceToSocket() throws BusinessException {
         applianceService.connectToSocket(appliance);
-        System.out.format("\033[33m%s successfully connect to socket%n\033[0m", appliance.getName());
+        System.out.format("%s successfully connect to socket%n", appliance.getName());
     }
 
     private void turnOnAppliance() throws BusinessException {
@@ -79,7 +79,7 @@ public class ApplianceMenuState implements MenuState {
             throw new OverLoadElectricityException(
                     "Opps, the electricity went out... Electricity load is too height. Please, turn off something!");
         } else {
-            System.out.format("\033[33m%s successfully turned on%n\033[0m", appliance.getName());
+            System.out.format("%s successfully turned on%n", appliance.getName());
         }
     }
 
@@ -92,17 +92,17 @@ public class ApplianceMenuState implements MenuState {
         applianceService.turnOff(appliance);
         totalElectricityLoad = flatService.countCurrentElectricityLoad(flat);
         if (totalElectricityLoad > flat.getMaxConductivity()) {
-            System.out.format("\033[33m%s is turned off%n\033[0m", appliance.getName());
+            System.out.format("%s is turned off%n", appliance.getName());
             throw new OverLoadElectricityException(
                     "Sorry, the electricity still went out... Please, turn off something else!");
         } else {
-            System.out.format("\033[33m%s%s successfully turned off%n\033[0m", msg, appliance.getName());
+            System.out.format("%s%s successfully turned off%n", msg, appliance.getName());
         }
     }
 
     private void disconnectApplianceFromSocket() throws BusinessException {
         applianceService.disconnectFromSocket(appliance);
-        System.out.format("\033[33m%s successfully disconnect from socket%n\033[0m", appliance.getName());
+        System.out.format("%s successfully disconnect from socket%n", appliance.getName());
     }
 
     private void switchToApplianceMenu(MenuContext context, String applianceName) {
