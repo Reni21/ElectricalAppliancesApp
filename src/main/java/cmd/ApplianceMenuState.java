@@ -112,7 +112,7 @@ public class ApplianceMenuState implements MenuState {
 
     @Override
     public void printHelp() {
-        System.out.format("<--------------------------- %s MENU ---------------------------->%n",
+        System.out.format(" < - - - - - - - - - - - - - - %s MENU - - - - - - - - - - - - - - >%n",
                 appliance.getName().toString().toUpperCase());
         System.out.println(AppCommand.APPLIANCE_MENU_CMD);
     }
