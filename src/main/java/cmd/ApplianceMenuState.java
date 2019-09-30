@@ -33,6 +33,7 @@ public class ApplianceMenuState implements MenuState {
         if (input.isEmpty()) {
             return;
         }
+        input = input.trim();
         if (input.startsWith("--s-")) {
             switchToApplianceMenu(context, input.substring(4));
             return;

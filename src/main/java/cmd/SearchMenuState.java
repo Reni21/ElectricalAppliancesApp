@@ -24,6 +24,7 @@ public class SearchMenuState implements MenuState {
         if (input.isEmpty()){
             return;
         }
+        input = input.trim();
         switch (input) {
             case "--all":
                 List<ElectricalAppliance> appliances = flatService.getAllAppliances(flat);
