@@ -86,13 +86,6 @@ public class MainMenuStateTest {
         verify(flatService).countCurrentElectricityLoad(flat);
     }
 
-    @Test
-    public void shouldQuiteTheFlat() throws BusinessException {
-        List<String> dangerousAppliances = new ArrayList<>();
-        when(flatService.getDangerousTurnedOnAppliancesNames(flat)).thenReturn(dangerousAppliances);
-        instance.handleUserInput("--q", menuContext);
-    }
-
     @Test(expected = FireSafetyException.class)
     public void shouldThrowFireSafetyExceptionWhileQuiteTheFlat() throws BusinessException {
         List<String> dangerousAppliances = new ArrayList<>();
