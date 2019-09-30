@@ -4,13 +4,14 @@ public class AppCommand {
     public static final String MAIN_MENU_CMD =
             String.format(
                     "\033[96m\n\n < - - - - - - - - - - - - - - MAIN MENU - - - - - - - - - - - - - - >\n" +
-                            "    %-23s%s%n    %-23s%s%n    %-23s%s%n    %-23s%s%n" +
+                            "    %-23s%s%n    %-23s%s%n    %-23s%s%n    %-23s%s%n    %-23s%s%n" +
                             "    %-23s%s%n    %-23s%s%n    %-23s%s%n    %-23s%s%n\033[0m",
                     "  --all", "\"show all appliances in the flat\"",
                     "  --s-appliance_name", "\"select specific appliance\"",
                     "  --search", "\"search appliance\"",
                     "  --show", "\"show working appliances\"",
-                    "  --sort", "\"sort appliances by power\"",
+                    "  --sort+", "\"sort appliances by power ascending\"",
+                    "  --sort-", "\"sort appliances by power descending\"",
                     "  --load", "\"show current flat electricity load\"",
                     "  --q", "\"quite flat\"",
                     "  --help", "\"show menu command\""

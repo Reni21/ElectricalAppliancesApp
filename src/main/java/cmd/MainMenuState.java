@@ -37,8 +37,11 @@ public class MainMenuState implements MenuState {
             case "--show":
                 showWorkingAppliances();
                 break;
-            case "--sort":
-                sortAppliancesByPower();
+            case "--sort+":
+                printAppliances(flatService.sortAppliancesByPowerAscending(flat));
+                break;
+            case "--sort-":
+                printAppliances(flatService.sortAppliancesByPowerDescending(flat));
                 break;
             case "--search":
                 context.changeState(menuStateProvider.getSearchMenuState());
@@ -57,9 +60,8 @@ public class MainMenuState implements MenuState {
         }
     }
 
-    private void sortAppliancesByPower() {
-        flatService.sortAppliancesByPower(flat)
-                .forEach(appliance -> System.out.println(appliance.toString()));
+    private void printAppliances(List<ElectricalAppliance> appliances) {
+        appliances.forEach(appliance -> System.out.println(appliance.toString()));
     }
 
     private void switchToApplianceMenu(MenuContext context, String applianceName) {

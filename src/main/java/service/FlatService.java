@@ -2,6 +2,8 @@ package service;
 
 import entity.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -44,9 +46,15 @@ public class FlatService {
                 .sum();
     }
 
-    public List<ElectricalAppliance> sortAppliancesByPower(Flat flat) {
+    public List<ElectricalAppliance> sortAppliancesByPowerAscending(Flat flat) {
         return flat.getAppliances().stream
                 ().sorted()
+                .collect(Collectors.toList());
+    }
+
+    public List<ElectricalAppliance> sortAppliancesByPowerDescending(Flat flat) {
+        return flat.getAppliances().stream
+                ().sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
     }
 
