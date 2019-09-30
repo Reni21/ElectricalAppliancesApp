@@ -16,9 +16,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
-
+            ObjectMapper objectMapper = new ObjectMapper();
             InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("flat.json");
             Flat flat = objectMapper.readValue(is, Flat.class);
             FlatService flatService = new FlatService();
