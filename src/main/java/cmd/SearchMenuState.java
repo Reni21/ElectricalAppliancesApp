@@ -21,14 +21,14 @@ public class SearchMenuState implements MenuState {
 
     @Override
     public void handleUserInput(String input, MenuContext context) {
-        if (input.isEmpty()){
+        if (input.isEmpty()) {
             return;
         }
         input = input.trim();
         switch (input) {
             case "--all":
                 List<ElectricalAppliance> appliances = flatService.getAllAppliances(flat);
-                appliances.forEach(appliance -> System.out.println(appliance.toString()));
+                appliances.forEach(appliance -> System.out.println("\033[33m" + appliance.toString() + "\033[0m"));
                 break;
             case "--return":
                 context.changeState(menuStateProvider.getMainMenuState());
@@ -56,7 +56,7 @@ public class SearchMenuState implements MenuState {
             } else if (s.startsWith("--p-")) {
                 power = parsIntegerNumber(s);
             } else {
-                System.out.format("Unknown command \"%s\"%n", s.substring(0, 4));
+                System.out.format("\033[33mUnknown command \"%s\"%n\033[0m", s.substring(0, 4));
                 return;
             }
         }
@@ -66,9 +66,9 @@ public class SearchMenuState implements MenuState {
     private void findAndPrintResult(double weight, ApplianceColor color, ApplianceBrand brand, Integer power) {
         List<ElectricalAppliance> appliances = flatService.findAppliancesByParams(flat, weight, color, brand, power);
         if (appliances.isEmpty()) {
-            System.out.println("Search result: not appliances with such parameters");
+            System.out.println("\033[33mSearch result: not appliances with such parameters\033[0m");
         } else {
-            appliances.forEach(appliance -> System.out.println(appliance.toString()));
+            appliances.forEach(appliance -> System.out.println("\033[33m" + appliance.toString() + "\033[0m"));
         }
     }
 
