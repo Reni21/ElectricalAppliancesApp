@@ -21,10 +21,10 @@ public class SearchMenuState implements MenuState {
 
     @Override
     public void handleUserInput(String input, MenuContext context) {
-        input = input.trim();
         if (input.isEmpty()){
             return;
         }
+        input = input.trim();
         switch (input) {
             case "--all":
                 List<ElectricalAppliance> appliances = flatService.getAllAppliances(flat);

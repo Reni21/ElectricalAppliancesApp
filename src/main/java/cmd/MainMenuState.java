@@ -20,10 +20,10 @@ public class MainMenuState implements MenuState {
 
     @Override
     public void handleUserInput(String input, MenuContext context) throws FireSafetyException {
-        input = input.trim();
         if (input.isEmpty()) {
             return;
         }
+        input = input.trim();
         if (input.startsWith("--s-")) {
             switchToApplianceMenu(context, input.substring(4));
             return;
