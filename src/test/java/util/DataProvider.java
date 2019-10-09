@@ -1,12 +1,6 @@
 package util;
 
-import cmd.ApplianceMenuState;
-import cmd.MainMenuState;
-import cmd.MenuState;
-import cmd.MenuStateProvider;
-import entity.*;
-import service.ElectricalApplianceService;
-import service.FlatService;
+import app.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
