@@ -5,11 +5,13 @@ import lombok.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 @Setter
 @Getter
-@RequiredArgsConstructor
+@EqualsAndHashCode
 public class Flat {
     @NonNull
     private int maxConductivity;
@@ -19,5 +21,13 @@ public class Flat {
 
     public List<ElectricalAppliance> getAppliances() {
         return Collections.unmodifiableList(this.appliances);
+    }
+
+    @Override
+    public String toString() {
+        return "Flat " + this.hashCode() +
+                "\nAppliances: " + appliances.stream()
+                .map(appliance -> appliance.getName().toString())
+                .collect(Collectors.toList());
     }
 }

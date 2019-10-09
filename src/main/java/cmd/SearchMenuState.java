@@ -6,12 +6,15 @@ import entity.ElectricalAppliance;
 import entity.Flat;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import service.FlatService;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 public class SearchMenuState implements MenuState {
+    private static final Logger LOG = LogManager.getLogger(SearchMenuState.class);
     @NonNull
     private MenuStateProvider menuStateProvider;
     @NonNull
@@ -57,6 +60,7 @@ public class SearchMenuState implements MenuState {
                 power = parsIntegerNumber(s);
             } else {
                 System.out.format("Unknown command \"%s\"%n", s.substring(0, 4));
+                LOG.warn("Unknown command.");
                 return;
             }
         }
