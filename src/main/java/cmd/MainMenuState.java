@@ -86,7 +86,7 @@ public class MainMenuState implements MenuState {
 
     private void quiteApp() throws FireSafetyException {
         if (isAllDangerApplianceTurnedOff()) {
-            System.out.println("Quit the app...");
+            System.out.println("You just leaved the flat...");
             System.exit(0);
         } else {
             String appliances = String.join(", ", flatService.getDangerousTurnedOnAppliancesNames(flat));
