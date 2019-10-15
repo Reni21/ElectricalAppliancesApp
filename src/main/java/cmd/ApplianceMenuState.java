@@ -6,6 +6,8 @@ import exception.BusinessException;
 import exception.OverLoadElectricityException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import service.ElectricalApplianceService;
 import service.FlatService;
 
@@ -13,6 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class ApplianceMenuState implements MenuState {
+    private static final Logger LOG = LogManager.getLogger(ApplianceMenuState.class);
     @NonNull
     private MenuStateProvider menuStateProvider;
     @NonNull
@@ -63,6 +66,7 @@ public class ApplianceMenuState implements MenuState {
                 printHelp();
                 break;
             default:
+                LOG.warn("Unknown command.");
                 System.out.format("Unknown command \"%s\"%n", input);
         }
     }
@@ -92,7 +96,9 @@ public class ApplianceMenuState implements MenuState {
         applianceService.turnOff(appliance);
         totalElectricityLoad = flatService.countCurrentElectricityLoad(flat);
         if (totalElectricityLoad > flat.getMaxConductivity()) {
-            System.out.format("%s is turned off%n", appliance.getName());
+            String message = String.format("%s is turned off.", appliance.getName());
+            System.out.println(message);
+            LOG.info(message);
             throw new OverLoadElectricityException(
                     "Sorry, the electricity still went out... Please, turn off something else!");
         } else {

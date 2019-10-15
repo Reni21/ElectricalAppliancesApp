@@ -5,12 +5,15 @@ import entity.Flat;
 import exception.FireSafetyException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import service.FlatService;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 public class MainMenuState implements MenuState {
+    private static final Logger LOG = LogManager.getLogger(MainMenuState.class);
     @NonNull
     private MenuStateProvider menuStateProvider;
     @NonNull
@@ -25,7 +28,8 @@ public class MainMenuState implements MenuState {
         }
         input = input.trim();
         if (input.startsWith("--s-")) {
-            switchToApplianceMenu(context, input.substring(4));
+            String applianceName = input.substring(4);
+            switchToApplianceMenu(context, applianceName);
             return;
         }
 
@@ -56,6 +60,7 @@ public class MainMenuState implements MenuState {
                 printHelp();
                 break;
             default:
+                LOG.warn("Unknown command.");
                 System.out.format("Unknown command \"%s\"%n", input);
         }
     }
@@ -73,6 +78,7 @@ public class MainMenuState implements MenuState {
     private void showWorkingAppliances() {
         List<String> turnedOnAppliances = flatService.getNamesOfAllTurnedOnAppliances(flat);
         if (turnedOnAppliances.isEmpty()) {
+            LOG.info("Empty appliances names list.");
             System.out.println("All electrical appliance are turned of");
         } else {
             System.out.format("Turned on appliances: %s%n",
@@ -86,12 +92,13 @@ public class MainMenuState implements MenuState {
 
     private void quiteApp() throws FireSafetyException {
         if (isAllDangerApplianceTurnedOff()) {
-            System.out.println("You just leaved the flat...");
+            System.out.println("Quit the app...");
+            LOG.debug("Quit the app");
             System.exit(0);
         } else {
             String appliances = String.join(", ", flatService.getDangerousTurnedOnAppliancesNames(flat));
             System.out.format("\033[91mDanger appliances which not turned off: %s%n\033[0m", appliances);
-
+            LOG.warn("Turned off danger appliances:\n{}", appliances);
             throw new FireSafetyException("ATTENTION! You leave some appliances TURN ON, it can be dangerous!");
         }
     }
