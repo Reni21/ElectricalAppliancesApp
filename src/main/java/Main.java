@@ -7,6 +7,7 @@ import exception.FireSafetyException;
 import exception.OverLoadElectricityException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.Scanner;
 
 public class Main {
@@ -33,7 +34,7 @@ public class Main {
 //        }
     }
 
-    private static void runElectricalApplianceApp(MenuStateProvider menuProvider) {
+    private static void runElectricalApplianceApp (MenuStateProvider menuProvider) {
         LOG.debug("Start app");
         MenuContext menuContext = new MenuContext(menuProvider.getMainMenuState());
         menuContext.printHelp();
