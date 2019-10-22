@@ -1,6 +1,7 @@
 import cmd.MenuContext;
 import cmd.MenuStateProvider;
 import dao.ElectricalApplianceDao;
+import dao.ElectricalApplianceDaoImpl;
 import exception.ApplianceNotConnectToSocketException;
 import exception.BusinessException;
 import exception.FireSafetyException;
@@ -14,7 +15,7 @@ public class Main {
     private static final Logger LOG = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        ElectricalApplianceDao elApplianceDao = new ElectricalApplianceDao();
+        ElectricalApplianceDao elApplianceDao = new ElectricalApplianceDaoImpl();
         System.out.println(elApplianceDao.getByID(2));
 
         // App start
