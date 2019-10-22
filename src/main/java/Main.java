@@ -1,6 +1,9 @@
 import cmd.MenuContext;
 import cmd.MenuStateProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.cj.jdbc.Driver;
+import dao.ElectricalApplianceDao;
+import dao.EntityDao;
 import entity.*;
 import exception.ApplianceNotConnectToSocketException;
 import exception.BusinessException;
@@ -24,33 +27,44 @@ public class Main {
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) {
+        // test connectionFactory
+        ElectricalApplianceDao elApplianceDao = new ElectricalApplianceDao();
+        System.out.println(elApplianceDao.getByID(2));
+
+
+
         // JDBC connection
-        Class.forName(JDBC_DRIVER);
-        String sql = "SELECT * FROM el_appliance";
-        try (Connection conn = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
-             Statement statement = conn.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            testJDBCConnection(resultSet);
-        } catch ( SQLException e) {
-            e.printStackTrace();
-        }
+        //Class.forName(JDBC_DRIVER);
+//        try {
+//            DriverManager.registerDriver(new Driver());
+//        } catch (SQLException e) {
+//            LOG.error("Could not register driver", e);
+//        }
+//        String sql = "SELECT * FROM el_appliance";
+//        try (Connection conn = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+//             Statement statement = conn.createStatement();
+//             ResultSet resultSet = statement.executeQuery(sql)) {
+//            testJDBCConnection(resultSet);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
         // App start
 
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("flat.json");
-            Flat flat = objectMapper.readValue(is, Flat.class);
-            FlatService flatService = new FlatService();
-            ElectricalApplianceService applianceService = new ElectricalApplianceService();
-            MenuStateProvider menuProvider = new MenuStateProvider(applianceService, flatService, flat);
-
-            runElectricalApplianceApp(menuProvider);
-        } catch (IOException ex) {
-            LOG.error("Program crashed.\n", ex);
-            System.exit(-1);
-        }
+//        try {
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("flat.json");
+//            Flat flat = objectMapper.readValue(is, Flat.class);
+//            FlatService flatService = new FlatService();
+//            ElectricalApplianceService applianceService = new ElectricalApplianceService();
+//            MenuStateProvider menuProvider = new MenuStateProvider(applianceService, flatService, flat);
+//
+//            runElectricalApplianceApp(menuProvider);
+//        } catch (IOException ex) {
+//            LOG.error("Program crashed.\n", ex);
+//            System.exit(-1);
+//        }
     }
 
     private static void testJDBCConnection(ResultSet resultSet) throws SQLException {
