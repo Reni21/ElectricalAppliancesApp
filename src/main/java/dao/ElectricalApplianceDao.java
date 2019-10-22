@@ -42,6 +42,7 @@ public class ElectricalApplianceDao implements EntityDao<ElectricalAppliance> {
 
     @Override
     public List<ElectricalAppliance> getAll() {
+        LOG.info("\"getAll\" operation start.");
         List<ElectricalAppliance> result = new ArrayList<>();
 
         try (Connection conn = DataSourceConnectionFactory.getConnection();
@@ -59,6 +60,7 @@ public class ElectricalApplianceDao implements EntityDao<ElectricalAppliance> {
     }
 
     public ElectricalAppliance getByID(int applianceId) {
+        LOG.info("\"getById\" operation start for id={}.", applianceId);
         try (Connection conn = DataSourceConnectionFactory.getConnection();
              PreparedStatement statement = createStatementForActionById(GET_APPLIANCE_BY_ID, conn, applianceId);
              ResultSet resultSet = statement.executeQuery()) {
@@ -75,6 +77,7 @@ public class ElectricalApplianceDao implements EntityDao<ElectricalAppliance> {
 
     @Override
     public boolean create(ElectricalAppliance entity) {
+        LOG.info("\"create\" operation start for entity\n={}.", entity);
         try (Connection conn = DataSourceConnectionFactory.getConnection();
              PreparedStatement preparedStatement = createStatementWithMainFields(INSERT_INTO_APPLIANCE, conn, entity)) {
             int insertionResult = preparedStatement.executeUpdate();
@@ -96,6 +99,7 @@ public class ElectricalApplianceDao implements EntityDao<ElectricalAppliance> {
 
     @Override
     public boolean update(ElectricalAppliance entity) {
+        LOG.info("\"update\" operation start for entity\n={}.", entity);
         try (Connection conn = DataSourceConnectionFactory.getConnection();
              PreparedStatement preparedStatement = createStatementWithMainFields(UPDATE_APPLIANCE, conn, entity)) {
             preparedStatement.setInt(9, entity.getId());
@@ -111,6 +115,7 @@ public class ElectricalApplianceDao implements EntityDao<ElectricalAppliance> {
 
     @Override
     public boolean remove(ElectricalAppliance entity) {
+        LOG.info("\"remove\" operation start for entity\n={}.", entity);
         try (Connection conn = DataSourceConnectionFactory.getConnection();
              PreparedStatement preparedStatement = createStatementForActionById(DELETE_APPLIANCE, conn, entity.getId())) {
 
