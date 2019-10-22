@@ -84,7 +84,9 @@ public class ElectricalApplianceDaoImpl implements ElectricalApplianceDao {
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    entity.setId(generatedKeys.getInt(1));
+                    int generatedId = generatedKeys.getInt(1);
+                    entity.setId(generatedId);
+                    LOG.info("Id for new entity record id={}.", generatedId);
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
