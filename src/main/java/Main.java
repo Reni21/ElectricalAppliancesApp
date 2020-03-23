@@ -1,40 +1,41 @@
 import cmd.MenuContext;
 import cmd.MenuStateProvider;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import entity.Flat;
+import dao.ElectricalApplianceDao;
+import dao.ElectricalApplianceDaoImpl;
 import exception.ApplianceNotConnectToSocketException;
 import exception.BusinessException;
 import exception.FireSafetyException;
 import exception.OverLoadElectricityException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import service.ElectricalApplianceService;
-import service.FlatService;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class Main {
     private static final Logger LOG = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("flat.json");
-            Flat flat = objectMapper.readValue(is, Flat.class);
-            FlatService flatService = new FlatService();
-            ElectricalApplianceService applianceService = new ElectricalApplianceService();
-            MenuStateProvider menuProvider = new MenuStateProvider(applianceService, flatService, flat);
+        ElectricalApplianceDao elApplianceDao = new ElectricalApplianceDaoImpl();
+        System.out.println(elApplianceDao.getByID(2));
 
-            runElectricalApplianceApp(menuProvider);
-        } catch (IOException ex) {
-            LOG.error("Program crashed.\n", ex);
-            System.exit(-1);
-        }
+        // App start
+
+//        try {
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("flat.json");
+//            Flat flat = objectMapper.readValue(is, Flat.class);
+//            FlatService flatService = new FlatService();
+//            ElectricalApplianceService applianceService = new ElectricalApplianceService();
+//            MenuStateProvider menuProvider = new MenuStateProvider(applianceService, flatService, flat);
+//
+//            runElectricalApplianceApp(menuProvider);
+//        } catch (IOException ex) {
+//            LOG.error("Program crashed.\n", ex);
+//            System.exit(-1);
+//        }
     }
 
-    private static void runElectricalApplianceApp(MenuStateProvider menuProvider) {
+    private static void runElectricalApplianceApp (MenuStateProvider menuProvider) {
         LOG.debug("Start app");
         MenuContext menuContext = new MenuContext(menuProvider.getMainMenuState());
         menuContext.printHelp();
